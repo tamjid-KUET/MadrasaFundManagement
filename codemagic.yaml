@@ -1,0 +1,22 @@
+workflows:
+  android-workflow:
+    name: Android Build
+    environment:
+      groups:
+        - keystore_credentials # Only needed for release builds
+      vars:
+        CM_KEYSTORE_PATH: "/tmp/keystore.keystore" # For signing (optional)
+    scripts:
+      - name: Install Flutter
+        script: |
+          flutter --version
+          flutter pub get
+      - name: Build Android APK
+        script: |
+          flutter build apk --debug # Change to --release for production
+    artifacts:
+      - build/**/outputs/apk/**/*.apk
+    publishing:
+      email:
+        recipients:
+          - tamjid3.14@gmail.com # Replace with your email
